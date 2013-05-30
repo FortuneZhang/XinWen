@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @news.title %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= @news.content %>
+</p>
+
+<p>
+  <b>Author:</b>
+  <%= @news.author_id %>
+</p>
+
+
+
+<h2>Comments</h2>
+<% @news.comments.each do |comment| %>
+    <p>
+      <b>content:</b>
+      <%= comment.content %>
+    </p>
+
+    <p>
+      <b>time:</b>
+      <%= comment.updated_at %>
+    </p>
+
+    <p>
+      <b>user:</b>
+      <%= comment.user_id %>
+    </p>
+
+
+<% end %>
+
+<h2>add comment</h2>
+<%= form_for([@news, @news.comments.build]) do |f| %>
+    <div class="field">
+      <%= f.label '评论' %><br />
+      <%= f.text_field :content %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+
+<% end %>
+
+
+<%= link_to 'Edit', edit_news_path(@news) %> |
+<%= link_to 'Back', news_index_path %>

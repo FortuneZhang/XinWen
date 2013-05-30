@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  commenter_id: 1
+  content: MyString
+  is_show_public: false
+  user: 
+  news: 
+
+two:
+  commenter_id: 1
+  content: MyString
+  is_show_public: false
+  user: 
+  news: 

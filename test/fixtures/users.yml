@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  pwd: MyString
+  rank: 1
+
+two:
+  name: MyString
+  pwd: MyString
+  rank: 1
