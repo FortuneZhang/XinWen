@@ -44,8 +44,8 @@ class CommentsController < ApplicationController
     @news = News.find(params[:news_id])
     @user = User.find(1)
 
-    @comment = @news.comments.create(:commenter_id=>1,:content=> params[:comment]['content'],:is_show_public=> false,:user_id =>@user.id )
-
+    @comment = @news.comments.create(:commenter_id=>1,:content=> params[:comment]['content'],:is_show_public=> false )
+    @comment.user = @user
 
     #@comment2 = @user.comments.create(:commenter_id=>1,:content=> params[:comment]['content'],:is_show_public=> false )
 
