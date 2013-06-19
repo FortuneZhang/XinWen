@@ -1,3 +1,4 @@
+#encoding=UTF-8
 class NewsController < ApplicationController
   # GET /news
   # GET /news.json
@@ -8,6 +9,7 @@ class NewsController < ApplicationController
 
   def index
 
+    @title = "新闻浏览"
     @user = session[:user]
     if @user.rank == 2
       myarray= News.find_all_by_is_show_public_and_item_id(false, @user.item_id).reverse
@@ -37,7 +39,7 @@ class NewsController < ApplicationController
     @news = News.find(params[:id])
     @author = User.find(@news.author_id)
     @user = session[:user]
-
+    @title = @news.title
     if (@news.author_id == @author.id)
       @notifies = Notify.where(:target_id => @author.id, :news_id => @author.id)
       @notifies.each do |notify|
@@ -65,8 +67,8 @@ class NewsController < ApplicationController
   # GET /news/new
   # GET /news/new.json
   def new
+    @title = '新建新闻'
     @news = News.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @news }
@@ -76,6 +78,7 @@ class NewsController < ApplicationController
   # GET /news/1/edit
   def edit
     @news = News.find(params[:id])
+    @title =@news.title
   end
 
   # POST /news
@@ -125,7 +128,7 @@ class NewsController < ApplicationController
 
 
   def published
-
+    @title ='已发布新闻'
     @user = session[:user]
 
     #管理员
@@ -145,7 +148,7 @@ class NewsController < ApplicationController
 
   def unpublished
     @user = session[:user]
-
+    @title ='未发布新闻'
     #管理员
     if (@user.rank == 2)
       myarray = News.find_all_by_is_show_public_and_item_id(false, @user.item_id).reverse
@@ -162,7 +165,6 @@ class NewsController < ApplicationController
   end
 
   def issue
-
 
     @news = News.find(params[:id])
     @news.is_show_public = true
@@ -183,6 +185,7 @@ class NewsController < ApplicationController
 
   def search
 
+    @title = params[:search_target]
     myarray = News.find(:all, :conditions => ["title like ?", "%#{params[:search_target]}%"])
     @news = Kaminari.paginate_array(myarray).page(params[:page]).per($news_count_per_page)
 
@@ -195,8 +198,10 @@ class NewsController < ApplicationController
 
 
   def fenzu
+
     item = Item.find params[:id]
-    myarray = News.find_all_by_item_id item.id
+    @title =item.name
+    myarray = News.find_all_by_item_id params[:id]
     @news = Kaminari.paginate_array(myarray).page(params[:page]).per($news_count_per_page)
     respond_to do |format|
       format.html
