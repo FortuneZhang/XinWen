@@ -5,7 +5,7 @@ class NewsController < ApplicationController
   $news_count_per_page = 1
   $comments_count_per_page = 1
 
-  skip_before_filter :verify_authenticity_token, :only => [:search]
+  #skip_before_filter :verify_authenticity_token, :only => [:search]
 
   def index
 

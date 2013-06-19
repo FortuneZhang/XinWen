@@ -4,11 +4,14 @@
   </div>
   <div class="float_left">
     <br>
-    <form class="" action="news/search" method="post">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="text" class="input-medium search-query" style="height: 30px " placeholder="search" name="search_target">
-      <button type="submit" class="btn">Search</button>
-    </form>
+
+<%= form_tag :action=> 'search',:method=>'post' do   %>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" class="input-medium search-query" style="height: 30px " placeholder="search" name="search_target">
+        <button type="submit" class="btn">Search</button>
+<% end  %>
+
+
   </div>
 </div>
 <table>
