@@ -1,14 +1,72 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>XinWen</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<%= stylesheet_link_tag "application", :media => "all" %>
+<%= stylesheet_link_tag "web", :media => "all" %>
+<%= stylesheet_link_tag "lib/bootstrap.css", :media => "all" %>
+<%= javascript_include_tag "application" %>
 
-<%= yield %>
 
-</body>
-</html>
+<div class="text-left float_left left_30px">
+  <%= link_to '首页', {:controller => 'news', :action => 'index'} %>
+
+<%# 权限管理 %>
+
+<%# admin %>
+  <% if session[:user]!=nil and (session[:user].rank ==1) %>
+      <%= link_to '用户管理', {:controller => 'users', :action => 'index'} %>
+      <%= link_to '栏目管理', {:controller => 'items', :action => 'index'} %>
+  <% end %>
+
+<%# 栏目管理员  %>
+  <% if session[:user]!=nil and (session[:user].rank ==2) %>
+      <%= link_to '用户管理', {:controller => 'users', :action => 'index'} %>
+      <%= link_to '所有已发新闻', {:controller => 'news', :action => 'published'} %>
+      <%= link_to '所有待发新闻', {:controller => 'news', :action => 'unpublished'} %>
+  <% end %>
+
+<%# 撰写员 %>
+  <% if session[:user]!=nil and (session[:user].rank ==3) %>
+      <%= link_to '我的已发新闻', {:controller => 'news', :action => 'published'} %>
+      <%= link_to '我的待发新闻', {:controller => 'news', :action => 'unpublished'} %>
+  <% end %>
+  <% if  session[:user] != nil and session[:user].rank == 3 %>
+      <%= link_to '新建新闻', {:controller => 'news', :action => 'new'} %>
+  <% end %>
+</div>
+<div class="text-right">
+
+<%# 用户以及用户信息 %>
+  <% if session[:user]!= nil %>
+      <%= link_to session[:user].name, session[:user] %>
+
+      <% count = '( ' << session[:notify_count].to_s << ' )' %>
+      <%= link_to count, {:controller => 'api', :action => 'notify'} %>
+
+      <%= link_to '注销', {:controller => 'auth', :action => 'log_out'} %>  &nbsp;&nbsp;&nbsp;&nbsp;
+  <% else %>
+      <%= link_to '登录', {:controller => 'auth', :action => 'log_in'} %>   &nbsp;&nbsp;&nbsp;&nbsp;
+  <% end %>
+</div>
+
+<%# 栏目 %>
+<%= csrf_meta_tags %>
+
+<div>
+  <div class="float_left " style="position:absolute;top:100px ">
+    <ul class="ul_none_style">
+      <% items = $items %>
+      <% if items!=nil %>
+          <% items.each do |item| %>
+              <li class="text-info">
+                <%= link_to item.name, {:controller=>'news',:action=>'fenzu',:id=>item.id } %>
+              </li>
+          <% end %>
+      <% end %>
+    </ul>
+  </div>
+  <div class="float_left" style="position:absolute;top:30px ;left:200px ">
+    <%= yield %>
+  </div>
+
+</div>
+
+
+

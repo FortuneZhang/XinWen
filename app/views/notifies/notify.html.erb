@@ -1,0 +1,9 @@
+<div>
+  <h2>未读</h2>
+  <% @un_reads.each do |notify| %>
+      <%= link_to notify.user.name notify.user %> &nbsp;&nbsp;&nbsp;
+     <%= notify.content %>
+     <%= link_to notify.news.title notify.news %>
+  <% end %>
+
+</div>

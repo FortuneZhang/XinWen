@@ -1,0 +1,6 @@
+<br>
+
+<%=link_to @notify.user.name, @notify.user %>
+<b>在 </b>
+<%= @notify.updated_at %>  评论了您的文章 ：
+<%= link_to @notify.news.title, @notify.news %>

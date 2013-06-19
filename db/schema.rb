@@ -11,10 +11,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130530111043) do
+ActiveRecord::Schema.define(:version => 20130606112212) do
 
   create_table "comments", :force => true do |t|
-    t.integer  "commenter_id"
     t.string   "content"
     t.boolean  "is_show_public"
     t.integer  "user_id"
@@ -26,18 +25,50 @@ ActiveRecord::Schema.define(:version => 20130530111043) do
   add_index "comments", ["news_id"], :name => "index_comments_on_news_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
+  create_table "items", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "news", :force => true do |t|
     t.string   "title"
     t.string   "content"
     t.integer  "author_id"
+    t.boolean  "is_show_public"
+    t.integer  "item_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "notifies", :force => true do |t|
+    t.string   "target_id"
+    t.string   "content"
+    t.string   "is_read"
+    t.integer  "news_id"
+    t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "notifies", ["news_id"], :name => "index_notifies_on_news_id"
+  add_index "notifies", ["user_id"], :name => "index_notifies_on_user_id"
+
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "pwd"
     t.integer  "rank"
+    t.integer  "item_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

@@ -1,4 +1,18 @@
 XinWen::Application.routes.draw do
+
+  resources :items
+
+
+  match 'news/published' => 'news#published'
+  match 'news/unpublished' => 'news#unpublished'
+  match 'news/fenzu' => 'news#fenzu'
+  match 'news/issue' => 'news#issue'
+  match 'news/search' => 'news#search'
+
+
+  resources :notifies
+
+
   resources :comments
 
   resources :news
@@ -10,6 +24,13 @@ XinWen::Application.routes.draw do
   resources :news do
     resources :comments
   end
+
+
+  match 'api/test_notify' => 'notifies#test'
+  match 'auth/log_in' => 'auth#log_in'
+  match 'auth/log_out' => 'auth#log_out'
+  match 'auth/log_regist' => 'auth#log_regist'
+  match 'api/notify' => 'api#notify'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

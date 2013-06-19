@@ -1,55 +1,58 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Title:</b>
+  <b>标题:</b>
   <%= @news.title %>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <b>作者：</b>
+  <%= link_to @user.name, @user %>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <b>发布时间:</b>
+  <%= @news.updated_at %>
 </p>
-
 <p>
-  <b>Content:</b>
+  <b>内容:</b>
   <%= @news.content %>
 </p>
+<% if @news.is_show_public == false %>
+    <% if session[:user].rank == 2 %>
+        <%= link_to '签发', :action => 'issue' ,:id => @news.id  %>
+        <%= link_to '删除', @news, method: :delete, data: {confirm: 'Are you sure?'} %>
+    <% elsif session[:user].id ==@news.author_id %>
+        <%= link_to '编辑', edit_news_path(@news) %>
+        <%= link_to '删除', @news, method: :delete, data: {confirm: 'Are you sure?'} %>
+    <% end %>
 
-<p>
-  <b>Author:</b>
-  <%= @news.author_id %>
-</p>
+<% end %>
 
 
+<h5 class="text-error">评论：</h5>
+<% @comments.each do |comment| %>
 
-<h2>Comments</h2>
-<% @news.comments.each do |comment| %>
     <p>
-      <b>content:</b>
-      <%= comment.content %>
-    </p>
-
-    <p>
-      <b>time:</b>
+      <%= link_to comment.user.name, comment.user %>
+      在
       <%= comment.updated_at %>
+      发表评论：
     </p>
 
     <p>
-      <b>user:</b>
-      <%= link_to comment.user.name, comment.user%>
+      <small>
+      <%= comment.content %>
+      </small>
     </p>
 
-
 <% end %>
 
-<h2>add comment</h2>
+<%= paginate @comments %>
+<h5 class="text-success">发表评论：</h5>
 <%= form_for([@news, @news.comments.build]) do |f| %>
-    <div class="field">
-      <%= f.label '评论' %><br />
-      <%= f.text_field :content %>
+    <div class="field" >
+      <%= f.text_area :content,{:rows => 5, :cols => 15}%>
     </div>
-
     <div class="actions">
-      <%= f.submit %>
+      <%= f.submit '发表评论'%>
     </div>
-
 <% end %>
 
 
-<%= link_to 'Edit', edit_news_path(@news) %> |
-<%= link_to 'Back', news_index_path %>

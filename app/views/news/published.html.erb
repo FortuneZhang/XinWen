@@ -1,0 +1,21 @@
+<h1>已经发布新闻</h1>
+
+<table>
+  <tr>
+    <th>标题</th>
+
+    <th>发布时间</th>
+  </tr>
+
+  <% @news.each do |news| %>
+      <tr>
+        <td><%= link_to news.title, news %></td>
+        <td><%= news.updated_at %></td>
+      </tr>
+  <% end %>
+</table>
+
+<br />
+<%= paginate @news %>
+
+

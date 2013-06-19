@@ -1,0 +1,22 @@
+.log_in_form_position {
+    position: absolute;
+    left: 35%;
+    top: 15%;
+}
+
+.float_left {
+    float: left;
+}
+
+.left_30px
+{
+    margin-left: 30px ;
+}
+
+.float_right {
+    float: right
+}
+
+.ul_none_style {
+    list-style-type: none;
+}

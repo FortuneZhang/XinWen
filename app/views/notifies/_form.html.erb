@@ -1,0 +1,37 @@
+<%= form_for(@notify) do |f| %>
+  <% if @notify.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@notify.errors.count, "error") %> prohibited this notify from being saved:</h2>
+
+      <ul>
+      <% @notify.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :target_id %><br />
+    <%= f.text_field :target_id %>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br />
+    <%= f.text_field :content %>
+  </div>
+  <div class="field">
+    <%= f.label :is_read %><br />
+    <%= f.text_field :is_read %>
+  </div>
+  <div class="field">
+    <%= f.label :news %><br />
+    <%= f.text_field :news %>
+  </div>
+  <div class="field">
+    <%= f.label :user %><br />
+    <%= f.text_field :user %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

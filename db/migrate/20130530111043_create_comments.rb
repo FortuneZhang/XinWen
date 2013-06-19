@@ -1,7 +1,7 @@
 class CreateComments < ActiveRecord::Migration
   def change
     create_table :comments do |t|
-      t.integer :commenter_id
+
       t.string :content
       t.boolean :is_show_public
       t.references :user
